@@ -1,4 +1,0 @@
-vncpwd
-======
-
-VNC Password Decrypter
