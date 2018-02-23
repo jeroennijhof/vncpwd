@@ -24,8 +24,8 @@
 
 static u_char obfKey[8] = {23,82,107,6,35,78,88,7};
 
-void decryptPw( char *pPW ) {
-    char clrtxt[10];
+void decryptPw( unsigned char *pPW ) {
+    unsigned char clrtxt[10];
 	
     deskey(obfKey, DE1);
     des(pPW, clrtxt);
@@ -36,8 +36,7 @@ void decryptPw( char *pPW ) {
 
 int main(int argc, char *argv[]) {
     FILE *fp;
-    int c;
-    char *pwd;
+    unsigned char *pwd;
 
     if (argc < 2) {
         fprintf(stdout, "Usage: vncpwd <password file>\n");
