@@ -20,18 +20,19 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <string.h>
 #include "d3des.h"
 
 static u_char obfKey[8] = {23,82,107,6,35,78,88,7};
 
-void decryptPw( unsigned char *pPW ) {
+void decryptPw( const char* desc, unsigned char *pPW ) {
     unsigned char clrtxt[10];
 	
     deskey(obfKey, DE1);
     des(pPW, clrtxt);
     clrtxt[8] = 0;
 
-    fprintf(stdout, "Password: %s\n", clrtxt);
+    fprintf(stdout, "%s: %s\n", desc, clrtxt);
 }
 
 int main(int argc, char *argv[]) {
@@ -51,7 +52,9 @@ int main(int argc, char *argv[]) {
     fread(pwd, 1024, 1, fp);
     fclose(fp);
 
-    decryptPw(pwd);
+    decryptPw("Password", pwd);
+    if (strnlen((char *)pwd, 1024) > 8)
+        decryptPw("View-only password", pwd+8);
 
     free(pwd);
     return 0;
